@@ -1,13 +1,45 @@
-import React from \"react\";
-import { Card, CardHeader, CardTitle, CardContent } from \"@/components/ui/card\";
-import { \n    TrendingUp, \n    TrendingDown, \n    Activity, \n    Globe, \n    Sparkles, \n    Zap,\n    ArrowUpRight,\n    ChevronRight\n} from \"lucide-react\";
-import TickerTape from \"@/components/dashboard/TickerTape\";
-import FearGreedGauge from \"@/components/dashboard/FearGreedGauge\";
-import PortfolioSnapshot from \"@/components/dashboard/PortfolioSnapshot\";
-import NewsWidget from \"@/components/dashboard/NewsWidget\";
-import MoversCard from \"@/components/dashboard/MoversCard\";
-import WatchlistWidget from \"@/components/dashboard/WatchlistWidget\";
-import StockTwitsWidget from \"@/components/dashboard/StockTwitsWidget\";
-import EconCalendar from \"@/components/dashboard/EconCalendar\";
+import React from "react";
+import { TrendingUp, TrendingDown, Activity } from "lucide-react";
+import TickerTape from "@/components/dashboard/TickerTape";
+import MoversCard from "@/components/dashboard/MoversCard";
+import PortfolioSnapshot from "@/components/dashboard/PortfolioSnapshot";
+import NewsWidget from "@/components/dashboard/NewsWidget";
+import FearGreedGauge from "@/components/dashboard/FearGreedGauge";
+import StockTwitsWidget from "@/components/dashboard/StockTwitsWidget";
+import EconCalendar from "@/components/dashboard/EconCalendar";
+import WatchlistWidget from "@/components/dashboard/WatchlistWidget";
+import { TOP_GAINERS, TOP_LOSERS, MOST_ACTIVE } from "@/lib/mockData";
 
-export default function Dashboard() {\n    return (\n        <div className=\"space-y-6\">\n            {/* Welcome Banner */}\n            <div className=\"flex flex-col md:flex-row md:items-center justify-between gap-4\">\n                <div>\n                    <h1 className=\"text-3xl font-black tracking-tight text-foreground\">\n                        Welcome back, <span className=\"text-primary\">Ragu</span>\n                    </h1>\n                    <p className=\"text-muted-foreground text-sm font-medium mt-1\">\n                        Market sentiment is <span className=\"text-primary font-bold\">Greedy</span> today. SPY is up 0.45% in pre-market.\n                    </p>\n                </div>\n                <div className=\"flex items-center gap-3\">\n                    <div className=\"bg-accent/30 rounded-xl px-4 py-2 border border-border/50\">\n                        <div className=\"text-[9px] font-bold text-muted-foreground uppercase tracking-widest\">Portfolio</div>\n                        <div className=\"text-lg font-black\">$142,412.88</div>\n                    </div>\n                    <div className=\"w-10 h-10 rounded-xl bg-primary flex items-center justify-center text-primary-foreground shadow-lg shadow-primary/30\">\n                        <Zap className=\"w-6 h-6 fill-current\" />\n                    </div>\n                </div>\n            </div>\n\n            <TickerTape />\n\n            <div className=\"grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6\">\n                {/* Row 1 Content */}\n                <FearGreedGauge />\n                <div className=\"lg:col-span-2\">\n                    <PortfolioSnapshot />\n                </div>\n                <MoversCard />\n\n                {/* Row 2 Content */}\n                <div className=\"lg:col-span-2\">\n                    <NewsWidget />\n                </div>\n                <WatchlistWidget />\n                <EconCalendar />\n\n                {/* Row 3 Content */}\n                <div className=\"lg:col-span-3\">\n                    <StockTwitsWidget />\n                </div>\n                <Card className=\"bg-primary/5 border-primary/20 flex flex-col items-center justify-center p-6 text-center space-y-4\">\n                    <div className=\"p-4 rounded-full bg-primary/10\">\n                        <Sparkles className=\"w-8 h-8 text-primary animate-pulse\" />\n                    </div>\n                    <div className=\"space-y-1\">\n                        <h3 className=\"font-bold\">Pro Insights</h3>\n                        <p className=\"text-[10px] text-muted-foreground\">Get Gemini-powered analysis for your entire portfolio.</p>\n                    </div>\n                    <button className=\"px-4 py-2 rounded-lg bg-primary text-primary-foreground text-xs font-bold w-full hover:scale-105 transition-transform\">\n                        Upgrade Now\n                    </button>\n                </Card>\n            </div>\n        </div>\n    );\n}
+export default function Dashboard() {
+    return (
+        <div className="space-y-2 md:space-y-3">
+            {/* Market Pulse Ticker */}
+            <TickerTape />
+
+            {/* Primary row: movers 3-col + portfolio snapshot */}
+            <div className="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-4 gap-2 md:gap-3">
+                <MoversCard title="Top Gainers" icon={TrendingUp} data={TOP_GAINERS} type="gainers" />
+                <MoversCard title="Top Losers" icon={TrendingDown} data={TOP_LOSERS} type="losers" />
+                <div className="col-span-2 sm:col-span-1 xl:col-span-1">
+                    <MoversCard title="Most Active" icon={Activity} data={MOST_ACTIVE} type="gainers" />
+                </div>
+                <div className="col-span-2 sm:col-span-3 xl:col-span-1">
+                    <PortfolioSnapshot />
+                </div>
+            </div>
+
+            {/* Secondary row: watchlist + news + fear/greed + econ calendar */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-2 md:gap-3">
+                <WatchlistWidget />
+                <NewsWidget />
+                <FearGreedGauge />
+                <EconCalendar />
+            </div>
+
+            {/* Social */}
+            <div className="grid grid-cols-1 gap-2 md:gap-3">
+                <StockTwitsWidget />
+            </div>
+        </div>
+    );
+}
