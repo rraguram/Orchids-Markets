@@ -1,0 +1,4 @@
+import React from \"react\";
+import { LineChart, Line, ResponsiveContainer, YAxis } from \"recharts\";
+
+export default function MiniSparkline({ data, color }) {\n    const formattedData = data.map((v, i) => ({ v, i }));\n\n    return (\n        <div className=\"w-20 h-8\">\n            <ResponsiveContainer width=\"100%\" height=\"100%\">\n                <LineChart data={formattedData}>\n                    <YAxis domain={['auto', 'auto']} hide />\n                    <Line \n                        type=\"monotone\" \n                        dataKey=\"v\" \n                        stroke={color} \n                        strokeWidth={2} \n                        dot={false} \n                        isAnimationActive={false}\n                    />\n                </LineChart>\n            </ResponsiveContainer>\n        </div>\n    );\n}
